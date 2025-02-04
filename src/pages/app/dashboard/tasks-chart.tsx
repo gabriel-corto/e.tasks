@@ -1,3 +1,5 @@
+import { getTasksChart } from "@/api/get-tasks-chart";
+import { useQuery } from "@tanstack/react-query";
 import {
   ResponsiveContainer,
   XAxis,
@@ -9,28 +11,17 @@ import {
   Bar,
 } from "recharts";
 
-const data = [
-  {
-    status: "Concluídas",
-    points: 11,
-  },
-  {
-    status: "Pendentes",
-    points: 5,
-  },
-  {
-    status: "Canceladas",
-    points: 19,
-  },
-];
-
 export function TasksChart() {
+  const { data: tasksChart } = useQuery({
+    queryKey: ["tasks", "charts"],
+    queryFn: getTasksChart,
+  });
   return (
     <ResponsiveContainer width="100%" height={300}>
       <BarChart
         width={500}
         height={300}
-        data={data}
+        data={tasksChart}
         margin={{
           top: 5,
           right: 30,

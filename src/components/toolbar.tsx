@@ -2,7 +2,7 @@ import { BookPlus } from "lucide-react";
 import { ReactNode } from "react";
 import { Button } from "./ui/button";
 import { Dialog, DialogTrigger } from "./ui/dialog";
-import { NewNoteDialog } from "@/pages/app/dashboard/new-task-dialog";
+import { NewTaskDialog } from "@/pages/app/dashboard/new-task-dialog";
 
 interface ToolbarProps {
   children: ReactNode;
@@ -24,7 +24,7 @@ export function Toolbar({ children, title }: ToolbarProps) {
           </Button>
         </DialogTrigger>
 
-        <NewNoteDialog />
+        <NewTaskDialog />
       </Dialog>
     </div>
   );

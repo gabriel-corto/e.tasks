@@ -3,14 +3,23 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import { Play, Trash, XCircle } from "lucide-react";
 import { TaskStatus } from "./task-status";
 
-export function TaskTableRow() {
+type TaskStatus = "pending" | "in-progress" | "completed" | "canceled";
+
+interface TaskProps {
+  task: {
+    name: string;
+    status: TaskStatus;
+    createdAt: Date;
+  };
+}
+export function TaskTableRow({ task }: TaskProps) {
   return (
     <TableRow>
-      <TableCell>Configurar o Ambiente de Produção</TableCell>
+      <TableCell>{task.name}</TableCell>
       <TableCell>
-        <TaskStatus status="pending" />
+        <TaskStatus status={task.status} />
       </TableCell>
-      <TableCell>30 minutos</TableCell>
+      <TableCell>{task.createdAt.toLocaleString()}</TableCell>
       <TableCell>
         <Button
           size="sm"

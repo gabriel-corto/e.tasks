@@ -10,8 +10,14 @@ import {
 } from "@/components/ui/table";
 import { TaskTableRow } from "./task-table-row";
 import { TaskTableFilter } from "./task-table-filter";
+import { useQuery } from "@tanstack/react-query";
+import { getTasks } from "@/api/get-tasks";
 
 export function Tasks() {
+  const { data: tasks } = useQuery({
+    queryKey: ["tasks", "get-alls"],
+    queryFn: () => getTasks({}),
+  });
   return (
     <>
       <Helmet title="Tarefas" />
@@ -40,8 +46,8 @@ export function Tasks() {
             </TableHeader>
 
             <TableBody>
-              {Array.from({ length: 10 }).map((_, i) => {
-                return <TaskTableRow key={i} />;
+              {tasks?.map((task) => {
+                return <TaskTableRow task={task} />;
               })}
             </TableBody>
           </Table>
