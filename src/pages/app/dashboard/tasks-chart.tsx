@@ -11,15 +11,15 @@ import {
 
 const data = [
   {
-    taskName: "Completas",
+    status: "Concluídas",
     points: 11,
   },
   {
-    taskName: "Pendentes",
+    status: "Pendentes",
     points: 5,
   },
   {
-    taskName: "Canceladas",
+    status: "Canceladas",
     points: 19,
   },
 ];
@@ -40,7 +40,7 @@ export function TasksChart() {
         barSize={20}
       >
         <XAxis
-          dataKey="taskName"
+          dataKey="status"
           scale="point"
           padding={{ left: 10, right: 10 }}
         />

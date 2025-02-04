@@ -6,7 +6,7 @@ export function CanceledTasksCard() {
     <Card>
       <CardHeader className="flex-row items-center justify-between">
         <strong className="text-foreground text-lg tracking-tight">
-          Tarefas Pendentes
+          Tarefas Canceladas
         </strong>
 
         <XCircle className="text-rose-500 -6 h-6" />

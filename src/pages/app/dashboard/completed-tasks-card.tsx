@@ -6,7 +6,7 @@ export function CompletedTasksCard() {
     <Card>
       <CardHeader className="flex-row items-center justify-between">
         <strong className="text-foreground text-lg tracking-tight">
-          Tarefas Completas
+          Tarefas Concluídas
         </strong>
 
         <CheckCircle className="text-emerald-500 -6 h-6" />
