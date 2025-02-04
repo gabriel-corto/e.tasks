@@ -21,7 +21,7 @@ export function Sidebar() {
             <span>Início</span>
           </Link>
           <Link
-            to="/"
+            to="/tasks"
             className="flex items-center gap-1 transition-all font-semibold text-foreground/60 p-2 rounded-lg hover:bg-violet-600/20 hover:text-violet-600"
           >
             <ArrowDownLeftFromCircle className="w-6 h-6" />
