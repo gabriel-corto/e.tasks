@@ -3,5 +3,5 @@ interface SeparatorProps {
 }
 
 export function Separator({ legend }: SeparatorProps) {
-  return <span className="text-md text-neutral-400">{legend}</span>;
+  return <span className="text-sm text-foreground/80">{legend}</span>;
 }
