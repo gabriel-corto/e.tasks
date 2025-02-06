@@ -1,8 +1,8 @@
-import { BookPlus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { ReactNode } from "react";
 import { Button } from "./ui/button";
 import { Dialog, DialogTrigger } from "./ui/dialog";
-import { NewTaskDialog } from "@/pages/app/dashboard/new-task-dialog";
+import { CreateTaskDialog } from "@/pages/app/dashboard/create-task-dialog";
 
 interface ToolbarProps {
   children: ReactNode;
@@ -19,12 +19,12 @@ export function Toolbar({ children, title }: ToolbarProps) {
       <Dialog>
         <DialogTrigger asChild>
           <Button className="text-md font-bold  ">
-            <BookPlus className="w-5 h-5" />
+            <Plus className="w-5 h-5" />
             <span>Cadastrar nova tarefa</span>
           </Button>
         </DialogTrigger>
 
-        <NewTaskDialog />
+        <CreateTaskDialog />
       </Dialog>
     </div>
   );

@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Play, Trash, XCircle } from "lucide-react";
 import { TaskStatus } from "./task-status";
+import { formatDistanceToNow } from "date-fns";
+import { pt } from "date-fns/locale/pt";
 
 type TaskStatus = "pending" | "in-progress" | "completed" | "canceled";
 
@@ -19,7 +21,12 @@ export function TaskTableRow({ task }: TaskProps) {
       <TableCell>
         <TaskStatus status={task.status} />
       </TableCell>
-      <TableCell>{task.createdAt.toLocaleString()}</TableCell>
+      <TableCell>
+        {formatDistanceToNow(new Date(task.createdAt), {
+          locale: pt,
+          addSuffix: true,
+        })}
+      </TableCell>
       <TableCell>
         <Button
           size="sm"

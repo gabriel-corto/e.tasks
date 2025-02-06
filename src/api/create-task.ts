@@ -2,13 +2,18 @@ import { api } from "@/lib/axios";
 
 type TaskStatus = "pending" | "in-progress" | "completed" | "canceled";
 
-interface NewTaskBody {
+interface CreateTaskBody {
   id: string;
   name: string;
   status: TaskStatus;
   createdAt: Date;
 }
-export async function newTask({ id, name, status, createdAt }: NewTaskBody) {
+export async function createTask({
+  id,
+  name,
+  status,
+  createdAt,
+}: CreateTaskBody) {
   await api.post("/tasks", {
     id,
     name,

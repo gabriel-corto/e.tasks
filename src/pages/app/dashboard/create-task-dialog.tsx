@@ -1,61 +1,66 @@
-import { newTask } from "@/api/new-task";
+import { createTask } from "@/api/create-task";
 import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
-import { DialogClose, DialogContent } from "@/components/ui/dialog";
+import {
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { Loader, Plus } from "lucide-react";
+import { Loader2, Plus } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
-const newTaskScheme = z.object({
+const createTaskScheme = z.object({
   taskName: z.string().min(5, "Porfavor insira uma tarefa válida!"),
 });
 
-type NewTaskFormData = z.infer<typeof newTaskScheme>;
+type createTaskFormData = z.infer<typeof createTaskScheme>;
 type TaskStatus = "pending" | "in-progress" | "completed" | "canceled";
 
-interface NewTasData {
+interface Task {
   id: string;
   name: string;
   status: TaskStatus;
   createdAt: Date;
 }
-export function NewTaskDialog() {
+export function CreateTaskDialog() {
+  const { mutateAsync: createTaskFn } = useMutation({
+    mutationFn: createTask,
+  });
+
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, errors },
-  } = useForm<NewTaskFormData>({
-    resolver: zodResolver(newTaskScheme),
+  } = useForm<createTaskFormData>({
+    resolver: zodResolver(createTaskScheme),
   });
 
-  const { mutateAsync: newTaskFn } = useMutation({
-    mutationFn: newTask,
-  });
-
-  async function handleNewTask(data: NewTaskFormData) {
+  async function handlecreateTask(data: createTaskFormData) {
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
     try {
-      const newTaskData: NewTasData = {
+      const createTaskData: Task = {
         id: crypto.randomUUID(),
         name: data.taskName,
         status: "pending",
         createdAt: new Date(),
       };
 
-      newTaskFn(newTaskData);
+      createTaskFn(createTaskData);
       toast.success("Tarefa Cadastrada com suceso!");
     } catch {
       toast.error("Erro ao Cadastrar Tarefa!", {
         action: {
           label: "Tentar Novamente",
           onClick: () => {
-            handleNewTask(data);
+            handlecreateTask(data);
           },
         },
       });
@@ -65,10 +70,14 @@ export function NewTaskDialog() {
   return (
     <DialogContent>
       <Logo />
+      <DialogTitle className="sr-only">Modal de Nova Tarefa</DialogTitle>
+      <DialogDescription className="sr-only">
+        Crie e organize suas tarefas
+      </DialogDescription>
 
       <form
         className="flex flex-col gap-6"
-        onSubmit={handleSubmit(handleNewTask)}
+        onSubmit={handleSubmit(handlecreateTask)}
       >
         <div className="flex flex-col gap-2">
           <Label htmlFor="title">Insira uma nome para sua tarefa</Label>
@@ -92,7 +101,7 @@ export function NewTaskDialog() {
           <Button type="submit" disabled={isSubmitting}>
             {isSubmitting ? (
               <>
-                <Loader className="w-4 h-4 animate-spin" />
+                <Loader2 className="w-4 h-4 animate-spin" />
                 <span>Cadastrando...</span>
               </>
             ) : (

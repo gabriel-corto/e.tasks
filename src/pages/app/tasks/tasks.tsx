@@ -15,7 +15,7 @@ import { getTasks } from "@/api/get-tasks";
 
 export function Tasks() {
   const { data: tasks } = useQuery({
-    queryKey: ["tasks", "get-alls"],
+    queryKey: ["tasks"],
     queryFn: () => getTasks({}),
   });
   return (
@@ -38,7 +38,7 @@ export function Tasks() {
               <TableRow className="bg-neutral-100 dark:bg-slate-900">
                 <TableHead className="w-[350px]">Nome</TableHead>
                 <TableHead className="w-[150px]">Status</TableHead>
-                <TableHead className="w-[200px]">Criado Há</TableHead>
+                <TableHead className="w-[200px]">Data de Criação</TableHead>
                 <TableHead className="w-[100px]"></TableHead>
                 <TableHead className="w-[100px]"></TableHead>
                 <TableHead className="w-[100px]"></TableHead>
@@ -47,7 +47,7 @@ export function Tasks() {
 
             <TableBody>
               {tasks?.map((task) => {
-                return <TaskTableRow task={task} />;
+                return <TaskTableRow task={task} key={task.name} />;
               })}
             </TableBody>
           </Table>
