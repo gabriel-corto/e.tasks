@@ -12,16 +12,36 @@ import {
 } from "recharts";
 
 export function TasksChart() {
-  const { data: tasksChart } = useQuery({
-    queryKey: ["tasks", "charts"],
+  const { data: tasks } = useQuery({
+    queryKey: ["tasks"],
     queryFn: getTasksChart,
   });
+
+  const completedTasks = tasks?.filter((task) => task.status === "completed");
+  const pendingTasks = tasks?.filter((task) => task.status === "pending");
+  const canceledTasks = tasks?.filter((task) => task.status === "canceled");
+
+  const chart = [
+    {
+      status: "Completed",
+      points: completedTasks?.length,
+    },
+    {
+      status: "Pendentes",
+      points: pendingTasks?.length,
+    },
+    {
+      status: "Canceladas",
+      points: canceledTasks?.length,
+    },
+  ];
+
   return (
     <ResponsiveContainer width="100%" height={300}>
       <BarChart
         width={500}
         height={300}
-        data={tasksChart}
+        data={chart}
         margin={{
           top: 5,
           right: 30,

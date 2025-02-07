@@ -10,7 +10,7 @@ interface PendingTasksResponse {
 }
 
 export async function getPendingTasks() {
-  const response = await api.get<PendingTasksResponse[]>("/tasks-pending");
+  const response = await api.get<PendingTasksResponse[]>("/tasks");
 
   return response.data;
 }

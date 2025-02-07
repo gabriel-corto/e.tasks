@@ -10,7 +10,7 @@ interface CanceledTasksResponse {
 }
 
 export async function getCanceledTasks() {
-  const response = await api.get<CanceledTasksResponse[]>("/tasks-canceled");
+  const response = await api.get<CanceledTasksResponse[]>("/tasks");
 
   return response.data;
 }

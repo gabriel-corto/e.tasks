@@ -8,13 +8,13 @@ interface TasksResponse {
   createdAt: Date;
 }
 interface FilterTasksParams {
-  name?: string | undefined | null;
-  status?: TaskStatus;
+  q?: string | null;
+  status?: TaskStatus | null;
 }
-export async function getTasks({ name, status }: FilterTasksParams) {
+export async function getTasks({ q, status }: FilterTasksParams) {
   const response = await api.get<TasksResponse[]>("/tasks", {
     params: {
-      name,
+      q,
       status,
     },
   });

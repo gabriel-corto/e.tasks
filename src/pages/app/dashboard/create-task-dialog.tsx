@@ -9,8 +9,9 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { queryClient } from "@/lib/react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { InvalidateQueryFilters, useMutation } from "@tanstack/react-query";
 import { Loader2, Plus } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -21,6 +22,7 @@ const createTaskScheme = z.object({
 });
 
 type createTaskFormData = z.infer<typeof createTaskScheme>;
+
 type TaskStatus = "pending" | "in-progress" | "completed" | "canceled";
 
 interface Task {
@@ -32,19 +34,21 @@ interface Task {
 export function CreateTaskDialog() {
   const { mutateAsync: createTaskFn } = useMutation({
     mutationFn: createTask,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["tasks"] as InvalidateQueryFilters);
+    },
   });
 
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, errors },
+    reset,
   } = useForm<createTaskFormData>({
     resolver: zodResolver(createTaskScheme),
   });
 
   async function handlecreateTask(data: createTaskFormData) {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
     try {
       const createTaskData: Task = {
         id: crypto.randomUUID(),
@@ -53,8 +57,10 @@ export function CreateTaskDialog() {
         createdAt: new Date(),
       };
 
-      createTaskFn(createTaskData);
+      await createTaskFn(createTaskData);
       toast.success("Tarefa Cadastrada com suceso!");
+
+      reset();
     } catch {
       toast.error("Erro ao Cadastrar Tarefa!", {
         action: {

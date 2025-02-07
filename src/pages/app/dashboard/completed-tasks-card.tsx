@@ -4,12 +4,16 @@ import { useQuery } from "@tanstack/react-query";
 import { CheckCircle } from "lucide-react";
 
 export function CompletedTasksCard() {
-  const { data: completedTasks } = useQuery({
-    queryKey: ["tasks", "completed-tasks"],
+  const { data: tasks } = useQuery({
+    queryKey: ["tasks"],
     queryFn: getCompletedTasks,
   });
 
-  const totalCompleted = completedTasks?.length;
+  const completedTasks = tasks?.filter((task) => {
+    return task.status === "completed";
+  });
+
+  const amountOfCompletedTasks = completedTasks?.length as number;
 
   return (
     <Card>
@@ -21,9 +25,12 @@ export function CompletedTasksCard() {
         <CheckCircle className="text-emerald-500 -6 h-6" />
       </CardHeader>
       <CardContent className="mt-[-1rem] flex items-center gap-2">
-        <strong className="text-3xl font-extrabold">{totalCompleted}</strong>
+        <strong className="text-3xl font-extrabold">
+          {amountOfCompletedTasks}
+        </strong>
         <span className="text-foreground/80">
-          - voçê completou {totalCompleted} tarefas
+          - voçê completou {amountOfCompletedTasks}{" "}
+          {amountOfCompletedTasks > 1 ? "Tarefas" : "Tarefa"}
         </span>
       </CardContent>
     </Card>

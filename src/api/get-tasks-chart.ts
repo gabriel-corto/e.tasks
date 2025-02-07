@@ -1,11 +1,16 @@
 import { api } from "@/lib/axios";
 
+type TaskStatus = "pending" | "in-progress" | "completed" | "canceled";
+
 interface TasksChartResponse {
-  status: string;
-  points: number;
+  id: string;
+  name: string;
+  status: TaskStatus;
+  createdAt: Date;
 }
+
 export async function getTasksChart() {
-  const response = await api.get<TasksChartResponse[]>("/tasks-charts");
+  const response = await api.get<TasksChartResponse[]>("/tasks");
 
   return response.data;
 }

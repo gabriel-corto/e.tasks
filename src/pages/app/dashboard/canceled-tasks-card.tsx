@@ -4,12 +4,16 @@ import { useQuery } from "@tanstack/react-query";
 import { XCircle } from "lucide-react";
 
 export function CanceledTasksCard() {
-  const { data: canceledTasks } = useQuery({
-    queryKey: ["tasks", "canceled-tasks"],
+  const { data: tasks } = useQuery({
+    queryKey: ["tasks"],
     queryFn: getCanceledTasks,
   });
 
-  const totalCanceled = canceledTasks?.length;
+  const completedTasks = tasks?.filter((task) => {
+    return task.status === "canceled";
+  });
+
+  const amountOfCanceledTasks = completedTasks?.length as number;
   return (
     <Card>
       <CardHeader className="flex-row items-center justify-between">
@@ -20,9 +24,12 @@ export function CanceledTasksCard() {
         <XCircle className="text-rose-500 -6 h-6" />
       </CardHeader>
       <CardContent className="mt-[-1rem] flex items-center gap-2">
-        <strong className="text-3xl font-extrabold">{totalCanceled}</strong>
+        <strong className="text-3xl font-extrabold">
+          {amountOfCanceledTasks}
+        </strong>
         <span className="text-foreground/80">
-          - voçê cancelou {totalCanceled} tarefas
+          - voçê cancelou {amountOfCanceledTasks}{" "}
+          {amountOfCanceledTasks > 1 ? "Tarefas" : "Tarefa"}
         </span>
       </CardContent>
     </Card>

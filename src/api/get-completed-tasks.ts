@@ -10,7 +10,7 @@ interface CompletedTasksResponse {
 }
 
 export async function getCompletedTasks() {
-  const response = await api.get<CompletedTasksResponse[]>("/tasks-completed");
+  const response = await api.get<CompletedTasksResponse[]>("/tasks");
 
   return response.data;
 }
